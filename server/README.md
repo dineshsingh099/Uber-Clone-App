@@ -71,3 +71,69 @@ curl -X POST http://localhost:3000/users/register \
   "password": "password123"
 }'
 ```
+
+### POST /users/login
+
+#### Description
+This endpoint is used to log in an existing user.
+
+#### Request Body
+The request body should be a JSON object containing the following fields:
+- `email`: A string representing the user's email. It must be a valid email format.
+- `password`: A string representing the user's password. It must be at least 6 characters long.
+
+Example:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+#### Responses
+
+- `200 OK`: The user was successfully logged in.
+  - Response Body:
+    ```json
+    {
+      "token": "jwt_token",
+      "user": {
+        "_id": "user_id",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com"
+      }
+    }
+    ```
+- `400 Bad Request`: The request body is invalid or missing required fields.
+  - Response Body:
+    ```json
+    {
+      "error": [
+        {
+          "msg": "Error message",
+          "param": "field_name",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+- `401 Unauthorized`: The email or password is incorrect.
+  - Response Body:
+    ```json
+    {
+      "message": "Invalid email or password"
+    }
+    ```
+
+#### Example Request
+```bash
+curl -X POST http://localhost:3000/users/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}'
+```
