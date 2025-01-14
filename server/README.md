@@ -137,3 +137,70 @@ curl -X POST http://localhost:3000/users/login \
   "password": "password123"
 }'
 ```
+
+### GET /users/profile
+
+#### Description
+This endpoint is used to get the profile of the authenticated user.
+
+#### Headers
+- `Authorization`: Bearer token for the authenticated user.
+
+#### Responses
+
+- `200 OK`: The user's profile was successfully retrieved.
+  - Response Body:
+    ```json
+    {
+      "_id": "user_id",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+    ```
+- `401 Unauthorized`: The user is not authenticated.
+  - Response Body:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+#### Example Request
+```bash
+curl -X GET http://localhost:3000/users/profile \
+-H "Authorization: Bearer jwt_token"
+```
+
+### GET /users/logout
+
+#### Description
+This endpoint is used to log out the authenticated user.
+
+#### Headers
+- `Authorization`: Bearer token for the authenticated user.
+
+#### Responses
+
+- `200 OK`: The user was successfully logged out.
+  - Response Body:
+    ```json
+    {
+      "message": "Logged out"
+    }
+    ```
+- `401 Unauthorized`: The user is not authenticated.
+  - Response Body:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+#### Example Request
+```bash
+curl -X GET http://localhost:3000/users/logout \
+-H "Authorization: Bearer jwt_token"
+```
