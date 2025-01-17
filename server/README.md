@@ -204,3 +204,77 @@ This endpoint is used to log out the authenticated user.
 curl -X GET http://localhost:3000/users/logout \
 -H "Authorization: Bearer jwt_token"
 ```
+
+### POST /captains/register
+
+#### Description
+This endpoint is used to register a new captain.
+
+#### Request Body
+The request body should be a JSON object containing the following fields:
+- `firstname`: A string representing the captain's first name. It must be at least 3 characters long.
+- `lastname`: A string representing the captain's last name. It must be at least 3 characters long.
+- `email`: A string representing the captain's email. It must be a valid email format.
+- `password`: A string representing the captain's password. It must be at least 6 characters long.
+- `color`: A string representing the vehicle's color.
+- `plate`: A string representing the vehicle's plate number.
+- `capacity`: A number representing the vehicle's capacity.
+- `vehicleType`: A string representing the type of vehicle. Allowed values are `car`, `motorcycle`, `auto`.
+
+Example:
+```json
+{
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "color": "red",
+  "plate": "ABC123",
+  "capacity": 4,
+  "vehicleType": "car"
+}
+```
+
+#### Responses
+
+- `201 Created`: The captain was successfully registered.
+  - Response Body:
+    ```json
+    {
+      "_id": "captain_id",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "red",
+        "plate": "ABC123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    }
+    ```
+- `400 Bad Request`: The request body is invalid or missing required fields.
+  - Response Body:
+    ```json
+    {
+      "error": "All fields are required"
+    }
+    ```
+
+#### Example Request
+```bash
+curl -X POST http://localhost:3000/captains/register \
+-H "Content-Type: application/json" \
+-d '{
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "color": "red",
+  "plate": "ABC123",
+  "capacity": 4,
+  "vehicleType": "car"
+}'
+```

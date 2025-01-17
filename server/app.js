@@ -7,6 +7,7 @@ const cookiesParser = require("cookie-parser");
 const connectToDb = require("./db/database");
 const { connect } = require("mongoose");
 const userRoutes = require("./routes/user.routes");
+const captainRoutes = require("./routes/captain.routes");
 
 
 connectToDb();
@@ -22,5 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/users', userRoutes);
+app.use('/captains', captainRoutes);
+
 
 module.exports = app;
