@@ -5,7 +5,7 @@
 ### Cloning the Repository
 To clone the repository, run the following command:
 ```bash
-git clone https://github.com/your-username/uber-clone-app.git
+git clone https://github.com/dineshsingh099/Uber-Clone-App.git
 ```
 
 ### Setting Up the Environment
