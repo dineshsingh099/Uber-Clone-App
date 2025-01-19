@@ -309,3 +309,147 @@ curl -X POST http://localhost:3000/captains/register \
   "vehicleType": "car"
 }'
 ```
+
+### POST /captains/login
+
+#### Description
+
+This endpoint is used to log in an existing captain.
+
+#### Request Body
+
+The request body should be a JSON object containing the following fields:
+
+- `email`: A string representing the captain's email. It must be a valid email format.
+- `password`: A string representing the captain's password. It must be at least 6 characters long.
+
+Example:
+
+```json
+{
+	"email": "john.doe@example.com",
+	"password": "password123"
+}
+```
+
+#### Responses
+
+- `200 OK`: The captain was successfully logged in.
+  - Response Body:
+    ```json
+    {
+    	"token": "jwt_token",
+    	"captain": {
+    		"_id": "captain_id",
+    		"fullname": {
+    			"firstname": "John",
+    			"lastname": "Doe"
+    		},
+    		"email": "john.doe@example.com"
+    	}
+    }
+    ```
+- `400 Bad Request`: The request body is invalid or missing required fields.
+  - Response Body:
+    ```json
+    {
+    	"error": [
+    		{
+    			"msg": "Error message",
+    			"param": "field_name",
+    			"location": "body"
+    		}
+    	]
+    }
+    ```
+- `401 Unauthorized`: The email or password is incorrect.
+  - Response Body:
+    ```json
+    {
+    	"message": "Invalid email or password"
+    }
+    ```
+
+#### Example Request
+
+```bash
+curl -X POST http://localhost:3000/captains/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}'
+```
+
+### GET /captains/profile
+
+#### Description
+
+This endpoint is used to get the profile of the authenticated captain.
+
+#### Headers
+
+- `Authorization`: Bearer token for the authenticated captain.
+
+#### Responses
+
+- `200 OK`: The captain's profile was successfully retrieved.
+  - Response Body:
+    ```json
+    {
+    	"_id": "captain_id",
+    	"fullname": {
+    		"firstname": "John",
+    		"lastname": "Doe"
+    	},
+    	"email": "john.doe@example.com"
+    }
+    ```
+- `401 Unauthorized`: The captain is not authenticated.
+  - Response Body:
+    ```json
+    {
+    	"message": "Unauthorized"
+    }
+    ```
+
+#### Example Request
+
+```bash
+curl -X GET http://localhost:3000/captains/profile \
+-H "Authorization: Bearer jwt_token"
+```
+
+### GET /captains/logout
+
+#### Description
+
+This endpoint is used to log out the authenticated captain.
+
+#### Headers
+
+- `Authorization`: Bearer token for the authenticated captain.
+
+#### Responses
+
+- `200 OK`: The captain was successfully logged out.
+  - Response Body:
+    ```json
+    {
+    	"message": "Logged out"
+    }
+    ```
+- `401 Unauthorized`: The captain is not authenticated.
+  - Response Body:
+    ```json
+    {
+    	"message": "Unauthorized"
+    }
+    ```
+
+#### Example Request
+
+```bash
+curl -X GET http://localhost:3000/captains/logout \
+-H "Authorization: Bearer jwt_token"
+```
